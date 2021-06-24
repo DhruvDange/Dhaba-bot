@@ -1,5 +1,6 @@
 import discord
-from discord.ext import commands
+from discord import activity
+from discord.ext import commands, tasks
 import os
 
 bot_token = os.getenv("DISCORD_BOT_TOKEN")
@@ -23,6 +24,5 @@ async def reload(ctx, extension): # ctx -> context; extension -> cog
 for filename in os.listdir("./cogs"):
     if filename.endswith('.py'):
         client.load_extension(f"cogs.{filename[:-3]}") # To remove .py from filename
-
 
 client.run(bot_token)
