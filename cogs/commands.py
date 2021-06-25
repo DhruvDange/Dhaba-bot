@@ -1,12 +1,15 @@
 import discord
+from discord import client
 from discord.ext import commands
-import os
+import os, sys
 import random
+from discord_bot.webscrapping.insults import Insults
 
 class BotCommands(commands.Cog):
 
     def __init__(self, client):
         self.client = client
+        self.insults_list = Insults().file_main()
 
     @commands.command()
     async def ping(self, ctx):
@@ -19,8 +22,8 @@ class BotCommands(commands.Cog):
 
     @commands.command()
     async def insult(self, ctx):
-        responses = self.insult
-        await ctx.send(f"Its {random.choice(responses)}.")
+        responses = self.insults_list
+        await ctx.send(f"{ctx.message.author.mention} {random.choice(responses)}.")
 
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
