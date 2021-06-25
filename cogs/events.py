@@ -4,6 +4,7 @@ from discord import client
 from discord import activity
 from discord.ext import commands, tasks
 from itertools import cycle
+from discord_bot.webscrapping.insults import Insults
 
 from discord.ext.commands.errors import MissingRequiredArgument
 
@@ -17,6 +18,7 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
+        self.insults_list = Insults().file_main()
         self.change_status.start()
         await self.client.change_presence(status=discord.Status.online, activity=discord.Game("Discord.py"))
         print("Bot is ready.")

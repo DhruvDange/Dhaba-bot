@@ -17,6 +17,11 @@ class BotCommands(commands.Cog):
         responses = ["Heads", "Tails"]
         await ctx.send(f"Its {random.choice(responses)}.")
 
+    @commands.command()
+    async def insult(self, ctx):
+        responses = self.insult
+        await ctx.send(f"Its {random.choice(responses)}.")
+
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
         responses = ["It is certain",
