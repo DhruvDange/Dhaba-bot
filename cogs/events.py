@@ -1,8 +1,11 @@
+from logging import error
 import discord
 from discord import client
 from discord import activity
 from discord.ext import commands, tasks
 from itertools import cycle
+
+from discord.ext.commands.errors import MissingRequiredArgument
 
 status = cycle(["Status 1", "Status 2", "Status 3"])
 
@@ -25,6 +28,16 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         print(f"{member} has left the server.")
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.CommandNotFound):
+            await ctx.send("Invalid command used.")
+    
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send("You don't have permissions to do that.")
 
     @tasks.loop(seconds=15)
     async def change_status(self):

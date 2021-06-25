@@ -43,20 +43,24 @@ class BotCommands(commands.Cog):
         await ctx.send(f"Question: {question} \nAnswer: {random.choice(responses)}.")
 
     @commands.command()
-    async def clear(self, ctx, amount=5):
+    @commands.has_permissions(manage_messages=True)
+    async def clear(self, ctx, amount : int):
         await ctx.channel.purge(limit=amount)
 
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def kick(self, ctx, member : discord.Member, *, reason=None):
         await member.kick(reason=reason)
         await ctx.send(f"Thank fucking god {member} was kicked.")
 
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def ban(self, ctx, member : discord.Member, *, reason=None):
         await member.ban(reason=reason)
         await ctx.send(f"{member} was banned.\nAmen")
 
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def unban(self, ctx, *, member):
         # Member not in server, cant mention
         # get list of banned users
@@ -70,6 +74,16 @@ class BotCommands(commands.Cog):
                 await ctx.guild.unban(user)
                 await ctx.send(f"Unbanned user {user}.")
                 return
+
+    @clear.error
+    async def clear_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("Please specify amount of messages to delete.")
+
+    @_8ball.error
+    async def clear_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("Please provide a question.")
 
 def setup(client):
     client.add_cog(BotCommands(client))
