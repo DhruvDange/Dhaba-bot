@@ -1,7 +1,9 @@
 from logging import error
 import discord
+import random
 from discord import client
 from discord import activity
+from discord import message
 from discord.ext import commands, tasks
 from itertools import cycle
 
@@ -9,6 +11,17 @@ from discord.ext.commands.errors import MissingRequiredArgument
 
 status = cycle(["Status 1", "Status 2", "Status 3"])
 
+among_us_art = """ 
+  DID SOMEONE SAY AMOG US?????\n
+. 　　　。　　　　•　ﾟ　　。 　　.\n
+.　　 。　　　• . 　　 • 　　　　• 
+　ﾟ Red was not An Impostor.　 ඞ。　.\n
+'　 1 Impostor remains 　 　　。\n
+ﾟ　　　.　　　. 　　.　 .\n
+    SUSSY BAKA (uwu) """
+
+csgo_dark = ["What do CS:GO and Jeffery Epstein have in common...they're both dead.",
+             "Whats the difference between CS:GO and Jeffery Epstein... One is played by kids and one liked playing with kids."]
 
 class Events(commands.Cog):
 
@@ -28,6 +41,15 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         print(f"{member} has left the server.")
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.content.find("csgo") != -1:
+            if( random.randint(1,6) % 5 == 0):
+                await message.channel.send(random.choice(csgo_dark))
+        if message.content.find("among us") != -1:
+            if( random.randint(1,3) % 2 == 0):
+                await message.channel.send(among_us_art)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
