@@ -21,9 +21,9 @@ class BotCommands(commands.Cog):
         await ctx.send(f"Its {random.choice(responses)}.")
 
     @commands.command()
-    async def insult(self, ctx):
+    async def insult(self, ctx, *, member: discord.Member):
         responses = self.insults_list
-        await ctx.send(f"{ctx.message.author.mention} {random.choice(responses)}.")
+        await ctx.send(f"{member} {random.choice(responses)}.")
 
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
