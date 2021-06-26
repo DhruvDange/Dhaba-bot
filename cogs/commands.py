@@ -23,7 +23,7 @@ class BotCommands(commands.Cog):
     @commands.command()
     async def insult(self, ctx, *, member: discord.Member):
         responses = self.insults_list
-        await ctx.send(f"{member} {random.choice(responses)}.")
+        await ctx.send(f"{member.mention} {random.choice(responses)}.")
 
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
@@ -83,15 +83,15 @@ class BotCommands(commands.Cog):
                 await ctx.send(f"Unbanned user {user}.")
                 return
 
-    @clear.error
-    async def clear_error(self, ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("Please specify amount of messages to delete.")
-
     @_8ball.error
-    async def clear_error(self, ctx, error):
+    async def _8ball_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Please provide a question.")
+
+    @insult.error
+    async def insult_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("Please mention a user to insult.")
 
 def setup(client):
     client.add_cog(BotCommands(client))
