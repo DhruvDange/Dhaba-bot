@@ -3,7 +3,7 @@ from discord import client
 from discord.ext import commands
 import os, sys
 import random
-from discord_bot.webscrapping.insults import Insults
+from discord_bot.webscraping.insults import Insults
 
 class BotCommands(commands.Cog):
 
@@ -15,41 +15,6 @@ class BotCommands(commands.Cog):
     async def ping(self, ctx):
         await ctx.send(f'Pong! {round(self.client.latency * 1000)}ms')
     
-    @commands.command(aliases = ['toss', 'cointoss'])
-    async def coin(self, ctx):
-        responses = ["Heads", "Tails"]
-        await ctx.send(f"Its {random.choice(responses)}.")
-
-    @commands.command()
-    async def insult(self, ctx, *, member: discord.Member):
-        responses = self.insults_list
-        await ctx.send(f"{member.mention} {random.choice(responses)}.")
-
-    @commands.command(aliases=['8ball'])
-    async def _8ball(self, ctx, *, question):
-        responses = ["It is certain",
-                                    "It is decidedly so", 
-                                    "Without a doubt", 
-                                    "Yes, definitely",
-                                    "You may rely on it", 
-                                    "As I see it, yes", 
-                                    "Most Likely", 
-                                    "Outlook Good",
-                                    "Yes", 
-                                    "Signs point to yes", 
-                                    "Reply hazy, try again", 
-                                    "Ask again later",
-                                    "Better not tell you now", 
-                                    "Cannot predict now", 
-                                    "Concentrate and ask again",
-                                    "Don't count on it", 
-                                    "My reply is no", 
-                                    "My sources say no", 
-                                    "Outlook not so good", 
-                                    "Very Doubtful"]
-
-        await ctx.send(f"Question: {question} \nAnswer: {random.choice(responses)}.")
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, amount : int):
@@ -82,6 +47,42 @@ class BotCommands(commands.Cog):
                 await ctx.guild.unban(user)
                 await ctx.send(f"Unbanned user {user}.")
                 return
+    
+    @commands.command(aliases = ['toss', 'cointoss'])
+    async def coin(self, ctx):
+        responses = ["Heads", "Tails"]
+        await ctx.send(f"Its {random.choice(responses)}.")
+
+    @commands.command()
+    async def insult(self, ctx, *, member: discord.Member):
+        responses = self.insults_list
+        await ctx.send(f"{member.mention} {random.choice(responses)}.")
+    
+
+    @commands.command(aliases=['8ball'])
+    async def _8ball(self, ctx, *, question):
+        responses = ["It is certain",
+                                    "It is decidedly so", 
+                                    "Without a doubt", 
+                                    "Yes, definitely",
+                                    "You may rely on it", 
+                                    "As I see it, yes", 
+                                    "Most Likely", 
+                                    "Outlook Good",
+                                    "Yes", 
+                                    "Signs point to yes", 
+                                    "Reply hazy, try again", 
+                                    "Ask again later",
+                                    "Better not tell you now", 
+                                    "Cannot predict now", 
+                                    "Concentrate and ask again",
+                                    "Don't count on it", 
+                                    "My reply is no", 
+                                    "My sources say no", 
+                                    "Outlook not so good", 
+                                    "Very Doubtful"]
+
+        await ctx.send(f"Question: {question} \nAnswer: {random.choice(responses)}.")
 
     @_8ball.error
     async def _8ball_error(self, ctx, error):
