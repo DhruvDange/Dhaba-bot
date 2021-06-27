@@ -10,7 +10,7 @@ I also learnt a lot of new programming features.
 
 Some of these include:
 - Asynchronous programming
-- Web Scrapping
+- Web Scraping
 - Files (creation, reading etc)
 - Decorators in python
 - Error handeling 
