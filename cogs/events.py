@@ -9,7 +9,6 @@ from itertools import cycle
 
 from discord.ext.commands.errors import MissingRequiredArgument
 
-status = cycle(["with", "your", "mum"])
 
 among_us_art = """ 
   DID SOMEONE SAY AMOG US?????\n
@@ -60,9 +59,9 @@ class Events(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send("You don't have permissions to do that.")
 
-    @tasks.loop(seconds=1)
+    @tasks.loop()
     async def change_status(self):
-        await self.client.change_presence(activity=discord.Game(next(status)))
+        await self.client.change_presence(activity=discord.Game("with Discord.py"))
 
 def setup(client):
     client.add_cog(Events(client))

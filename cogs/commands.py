@@ -13,28 +13,28 @@ class BotCommands(commands.Cog):
         self.client = client
         self.insults_list = Insults().file_main()
 
-    @commands.command()
+    @commands.command(help="Check ping of bot server.")
     async def ping(self, ctx):
         await ctx.send(f'Pong! {round(self.client.latency * 1000)}ms')
     
-    @commands.command()
+    @commands.command(help="Clears a specified number of messages input by user.")
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, amount : int):
         await ctx.channel.purge(limit=amount)
 
-    @commands.command()
+    @commands.command(help="Can be used by admin to kick members.")
     @commands.has_permissions(administrator=True)
     async def kick(self, ctx, member : discord.Member, *, reason=None):
         await member.kick(reason=reason)
         await ctx.send(f"Thank fucking god {member} was kicked.")
 
-    @commands.command()
+    @commands.command(help="Can be used by admin to ban members.")
     @commands.has_permissions(administrator=True)
     async def ban(self, ctx, member : discord.Member, *, reason=None):
         await member.ban(reason=reason)
         await ctx.send(f"{member} was banned.\nAmen")
 
-    @commands.command()
+    @commands.command(help="Can be used by admin to unban members.")
     @commands.has_permissions(administrator=True)
     async def unban(self, ctx, *, member):
         # Member not in server, cant mention
@@ -50,17 +50,17 @@ class BotCommands(commands.Cog):
                 await ctx.send(f"Unbanned user {user}.")
                 return
     
-    @commands.command(aliases = ['toss', 'cointoss'])
+    @commands.command(aliases = ['toss', 'cointoss'], help = "Tosses a coin and gives the result.")
     async def coin(self, ctx):
         responses = ["Heads", "Tails"]
         await ctx.send(f"Its {random.choice(responses)}.")
 
-    @commands.command()
+    @commands.command(help="Insults a member.")
     async def insult(self, ctx, *, member: discord.Member):
         responses = self.insults_list
         await ctx.send(f"{member.mention} {random.choice(responses)}.")
 
-    @commands.command(aliases=['8ball'])
+    @commands.command(name="8ball", help="Gives a prediction to a question.")
     async def _8ball(self, ctx, *, question):
         responses = ["It is certain",
                                     "It is decidedly so", 

@@ -8,15 +8,15 @@ intents = discord.Intents().all()
 
 client = commands.Bot(command_prefix = ".", intents = intents)
 
-@client.command()
+@client.command(hidden=True)
 async def load(ctx, extension): # ctx -> context; extension -> cog
     client.load_extension(f"cogs.{extension}")
 
-@client.command()
+@client.command(hidden=True)
 async def unload(ctx, extension): # ctx -> context; extension -> cog
     client.unload_extension(f"cogs.{extension}")
     
-@client.command()
+@client.command(hidden=True)
 async def reload(ctx, extension): # ctx -> context; extension -> cog
     client.unload_extension(f"cogs.{extension}")
     client.load_extension(f"cogs.{extension}")
