@@ -4,7 +4,7 @@ from discord.ext import commands, tasks
 import os
 
 bot_token = os.getenv('DISCORD_BOT_TOKEN')
-intents = discord.Intents(messages = True, guilds = True, reactions = True, members = True, presences = True)
+intents = discord.Intents().all()
 
 client = commands.Bot(command_prefix = ".", intents = intents)
 

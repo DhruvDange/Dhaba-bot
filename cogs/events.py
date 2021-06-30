@@ -47,9 +47,8 @@ class Events(commands.Cog):
         if message.content.find("csgo") != -1:
             if( random.randint(1,6) % 5 == 0):
                 await message.channel.send(random.choice(csgo_dark))
-        if message.content.find("among us") != -1:
-            if( random.randint(1,3) % 2 == 0):
-                await message.channel.send(among_us_art)
+        if message.content.find("among us") != -1 or message.content.find("AMONG US") != -1 or message.content.find("AMOGUS") != -1:
+            await message.channel.send(among_us_art)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
@@ -61,7 +60,7 @@ class Events(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send("You don't have permissions to do that.")
 
-    @tasks.loop(seconds=5)
+    @tasks.loop(seconds=1)
     async def change_status(self):
         await self.client.change_presence(activity=discord.Game(next(status)))
 
