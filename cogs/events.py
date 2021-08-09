@@ -5,7 +5,7 @@ from discord import client
 from discord import activity
 from discord import message
 from discord.ext import commands, tasks
-from itertools import cycle
+from itertools import chain, cycle
 
 from discord.ext.commands.errors import MissingRequiredArgument
 
@@ -48,6 +48,11 @@ class Events(commands.Cog):
                 await message.channel.send(random.choice(csgo_dark))
         if message.content.find("among us") != -1 or message.content.find("AMONG US") != -1 or message.content.find("AMOGUS") != -1:
             await message.channel.send(among_us_art)
+        if message.content.find("valo") != -1 or message.content.find("val") != -1 or message.content.find("valo?") != -1:
+            img = random.randint(1,24)
+            with open(f'cogs\\static\\valorant-memes\\{img}.jpg', 'rb') as f:
+                picture = discord.File(f)
+                await message.channel.send(file=picture)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
